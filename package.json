@@ -1,0 +1,11 @@
+{
+  "name": "freelance",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "docker build -t freelance .",
+    "start": "docker run -d  -v $(pwd):/var/www/html/ -p 3000:80 --name freelance freelance",
+    "clean" : "docker rm $(docker ps -a -q) 2>/dev/null; docker rm -f freelance 2>/dev/null; echo all clean",
+    "go" : "npm run build && npm run clean && npm run start"
+  }
+}
