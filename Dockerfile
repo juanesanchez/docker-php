@@ -10,7 +10,6 @@ RUN docker-php-ext-install mysql; \
 
 
 COPY . /var/www/html/
-COPY startup.sh /var/www/html/startup.sh
 
 EXPOSE 3000
 
