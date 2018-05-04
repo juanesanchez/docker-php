@@ -15,7 +15,10 @@
     "php-start": "docker run -d -v $(pwd):/var/www/html -p 80:80 --link mysql:mysql.mydatabase -e MYSQL_DATABASE=mysql.mydatabase -e APP_ENV=dev --name=freelance freelance",
     "mysql-dump-import": "docker cp mysql-dump-import.sh mysql:/ && docker cp $npm_package_config_dumpfile mysql:/dump.sql && docker exec mysql sh mysql-dump-import.sh /dump.sql",
     "go_old" : "npm run build && npm run clean && npm run php-mysql-start && npm run mysql-dump-import &&npm run mysql-phpmyadmin",
+    "link-memcached" : "docker run --link my-memcache:memcache -d freelance",
+    "get-memcached" : "docker run --name my-memcache -d memcached",
     "step1" : "npm run mysql-fresh-start && sleep 15s && npm run mysql-phpmyadmin",
-    "step2" : "npm run php-build && sleep 15s && npm run php-start"
+    "step2" : "npm run php-build && sleep 15s && npm run php-start",
+    "step3" : "npm run get-memcached && sleep 15s && npm run link-memcached"
   }
 }

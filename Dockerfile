@@ -9,6 +9,12 @@ RUN docker-php-ext-install mysql; \
 	docker-php-ext-configure mysqli;
 
 
+RUN apt-get update && apt-get install -y libmemcached-dev zlib1g-dev \
+	&& pecl install memcached-3.0.4 \
+	&& docker-php-ext-enable memcached
+
+
+
 COPY . /var/www/html/
 
 EXPOSE 3000

@@ -1,11 +1,25 @@
 <?php 
 
-include("OwnMySqlI.class.php");
+require_once("OwnMySqlI.class.php");
+require_once("functions.php");
 
-$qMax = "SELECT * FROM mytable";
-$rMax = OwnMySqlI::execute($qMax);
-$aMax = $rMax->fetch_assoc();
 
-echo "<h1>" . $aMax['message'] . "</h1>";
+// phpinfo();
+
+$memca = $memcached = new Memcached();
+$memca->addServer("localhost", 11211);
+$memca->getStats();
+
+echo "Status Result: "; print_r($memca->getResultCode());
+
+echo "<br>";
+
+$memca->add('foo', 'bar');
+if ($memca->getResultCode() == Memcached::RES_NOTSTORED) {
+    echo "OK";
+}else{
+	echo "ERROR";
+}
+
 
 ?>
