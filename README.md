@@ -12,6 +12,6 @@ Clone the project, and then run with:
 
 ## View your code
 
-PHP        -> localhost
-PhpMyAdmin -> localhost:8080
-MySQL      -> localhost:3306
+	$ PHP        -> localhost
+	$ PhpMyAdmin -> localhost:8080
+	$ MySQL      -> localhost:3306
