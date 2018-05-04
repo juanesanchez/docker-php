@@ -3,9 +3,18 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "docker build -t freelance .",
+    "php-build": "docker build -t freelance .",
     "start": "docker run -d  -v $(pwd):/var/www/html/ -p 3000:80 --name freelance freelance",
     "clean" : "docker rm $(docker ps -a -q) 2>/dev/null; docker rm -f freelance 2>/dev/null; echo all clean",
-    "go" : "npm run build && npm run clean && npm run start"
+    "mysql-start": "docker pull mysql:5.5.46 && docker run -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=mydatabase --name mysql -d -p 3306:3306 mysql:5.5.46",
+    "mysql-connect-root": "docker exec -ti mysql mysql --user=root --password=password mydatabase",
+    "mysql-phpmyadmin": "docker run --name myadmin -d --link mysql:db -p 8080:80 phpmyadmin/phpmyadmin",
+    "mysql-fresh-start": "npm run clean-mysql; npm run mysql-start && sleep 15s && npm run mysql-import",
+	"mysql-import": "docker cp mysql-dump-import.sh mysql:/ && docker cp dump.tmp mysql:/dump.sql && docker exec mysql sh /mysql-dump-import.sh /dump.sql",
+    "clean-mysql" : "docker rm -f mysql",
+    "php-start": "docker run -d -v $(pwd):/var/www/html -p 80:80 --link mysql:mysql.mydatabase -e MYSQL_DATABASE=mysql.mydatabase -e APP_ENV=dev --name=freelance freelance",
+    "mysql-dump-import": "docker cp mysql-dump-import.sh mysql:/ && docker cp $npm_package_config_dumpfile mysql:/dump.sql && docker exec mysql sh mysql-dump-import.sh /dump.sql",
+    "go_old" : "npm run build && npm run clean && npm run php-mysql-start && npm run mysql-dump-import &&npm run mysql-phpmyadmin",
+    "go" : "npm run mysql-fresh-start && sleep 15s && npm run mysql-phpmyadmin && sleep 15s && npm run php-build && sleep 15s && npm run php-start"
   }
 }
