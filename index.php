@@ -7,7 +7,7 @@ require_once("functions.php");
 // phpinfo();
 
 $memca = $memcached = new Memcached();
-$memca->addServer("localhost", 11211);
+$memca->addServer("memcached", 11211);
 $memca->getStats();
 
 echo "Status Result: "; print_r($memca->getResultCode());
